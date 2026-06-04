@@ -56,12 +56,17 @@ export function loadConfig(): Config {
 export function saveConfig(config: Partial<Config>): void {
   ensureConfigDir();
 
-  const currentConfig = loadConfig();
-  const newConfig = {
-    ...currentConfig,
-    ...config
-  };
+  let currentConfig: Config = { ...DEFAULT_CONFIG };
+  if (existsSync(CONFIG_FILE)) {
+    try {
+      const content = readFileSync(CONFIG_FILE, 'utf-8');
+      currentConfig = { ...DEFAULT_CONFIG, ...JSON.parse(content) };
+    } catch {
+      // 파일 읽기 실패 시 기본값 사용
+    }
+  }
 
+  const newConfig = { ...currentConfig, ...config };
   writeFileSync(CONFIG_FILE, JSON.stringify(newConfig, null, 2), 'utf-8');
 }
 
