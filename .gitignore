@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+*.db
+*.db-*
+test-repo/
+test-config/
+test-db.sqlite
+.env
+.env.local
+npm-debug.log
+yarn-error.log
+coverage/
+.pytest_cache/
